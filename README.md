@@ -53,6 +53,8 @@ composer install
 php yii migrate
 php yii serve
 
+```
+
 ## 📁 Related Projects
 
 - [Quiz-School Student Panel](https://github.com/Azizbekutkirovich/Quiz-school) – Used by students to take tests and view results.
