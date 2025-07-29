@@ -4,7 +4,7 @@ $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 
 $config = [
-    'id' => 'basic',
+    'id' => 'quiz-school-teacher',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'aliases' => [
@@ -12,6 +12,7 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
     ],
     'language' => 'uz-UZ',
+    'sourceLanguage' => 'uz-UZ',
     'layout' => 'school',
     'defaultRoute' => 'main/index',
     'components' => [
@@ -20,12 +21,16 @@ $config = [
             'cookieValidationKey' => 'quiz-school-teacher',
             'baseUrl' => '/quiz-school-teacher'
         ],
+        'session' => [
+            'name' => 'quiz-school-teacher'
+        ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
             'identityClass' => 'app\models\Teachers',
             'enableAutoLogin' => true,
+            'loginUrl' => ['main/login']
         ],
         'errorHandler' => [
             'errorAction' => 'main/error',
@@ -44,6 +49,10 @@ $config = [
                     'levels' => ['error', 'warning'],
                 ],
             ],
+        ],
+        'security' => [
+            'class' => 'yii\base\Security',
+            'passwordHashCost' => 8
         ],
         'db' => $db,
         'urlManager' => [

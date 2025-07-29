@@ -21,13 +21,10 @@ class Teachers extends \yii\db\ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['login', 'name', 'surname', 'phone', 'school', 'job', 'password'], 'required', 'message' => "Maydonni to'ldirishv shart!"],
+            [['login', 'name', 'surname', 'phone', 'school', 'job', 'password'], 'required', 'message' => "Maydonni to'ldirish shart!"],
             [['school'], 'integer'],
             [['login', 'name', 'surname', 'phone', 'job', 'password'], 'string', 'max' => 255],
-            [['login', 'phone', 'password'], 'unique', 'targetAttribute' => ['login', 'phone', 'password']],
-            [['login'], 'unique', 'message' => 'Bu login band!'],
-            [['phone'], 'unique', 'message' => "Bu telefon raqamdan allaqachon ro'yhatdan o'tilgan!"],
-            [['password'], 'unique', 'message' => "Bu parol band! Boshqa parol kiriting!"]
+            ['login', 'unique', 'message' => 'Bu login band!'],
         ];
     }
 
@@ -46,10 +43,6 @@ class Teachers extends \yii\db\ActiveRecord implements IdentityInterface
             'job' => 'Job',
             'password' => 'Password',
         ];
-    }
-
-    public function create() {
-        return $this->save();
     }
 
     public static function findIdentity($id)
@@ -73,7 +66,7 @@ class Teachers extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public static function findByLogin($login)
     {
-        return self::findone(['login' => $login]);
+        return self::find()->select(['id', 'login', 'password'])->where(['login' => $login])->one();
     }
 
     /**
@@ -100,6 +93,10 @@ class Teachers extends \yii\db\ActiveRecord implements IdentityInterface
         // return $this->authKey === $authKey;
     }
 
+    public function setPassword($password) {
+        $this->password = Yii::$app->security->generatePasswordHash($password);
+    }
+
     /**
      * Validates password
      *
@@ -108,6 +105,6 @@ class Teachers extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public function validatePassword($password)
     {
-        return $this->password === $password;
+        return Yii::$app->security->validatePassword($password, $this->password);
     }
 }

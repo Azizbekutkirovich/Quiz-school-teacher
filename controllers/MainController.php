@@ -3,27 +3,52 @@ namespace app\controllers;
 
 use Yii;
 use app\models\LoginForm;
-use app\models\Signup;
+use app\models\Register;
 use yii\web\Controller;
+use yii\filters\AccessControl;
 
 class MainController extends Controller
 {
+    public function behaviors() {
+        return [
+            "access" => [
+                "class" => AccessControl::class,
+                "only" => ["index", "login", "register", "logout"],
+                "rules" => [
+                    [
+                        "actions" => ["index", "logout"],
+                        "allow" => true,
+                        "roles" => ['@']
+                    ],
+                    [
+                        "actions" => ["login", "register"],
+                        "allow" => true,
+                        "roles" => ['?']
+                    ]
+                ]
+            ]
+        ];
+    }
+
+    public function actions() {
+        return [
+            "error" => [
+                "class" => 'yii\web\ErrorAction',
+                "layout" => "error"
+            ]
+        ];
+    }
+
 	public function actionIndex() {
-        if (Yii::$app->user->isGuest) {
-            return $this->redirect(['main/login']);
-        }
 		return $this->render("index");
 	}
 
 	public function actionLogin()
     {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
         $this->layout = "login";
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            return $this->goHome();
         }
 
         $model->password = '';
@@ -33,36 +58,25 @@ class MainController extends Controller
     }
 
     public function actionRegister() {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
         $this->layout = "login";
-        $model = new Signup();
+        $model = new Register();
 
         if ($model->load(Yii::$app->request->post())) {
-            if (strlen($model->name) < 3) {
-                Yii::$app->session->setFlash("error", "Ismingiz kamida 3ta harfdan iborat bo'lishi lozim!");
-                return $this->redirect(['main/register']);
-            }
-            if (strlen($model->surname) < 5) {
-                Yii::$app->session->setFlash("error", "Familyangiz kamida 5ta harfdan iborat bo'lishi lozim!");
-                return $this->redirect(['main/register']);
-            }
-            if (strlen((string)$model->password) < 4) {
-                Yii::$app->session->setFlash("error", "Parol kamida 4ta belgidan iborat bo'lishi kerak!");
-                return $this->redirect(['main/register']);
-            }
             if ($model->secret != "platforma_va_test") {
-                Yii::$app->session->setFlash("error", "Maxfiy parolni noto'g'ri kiritdingiz!");
-                return $this->redirect(['main/register']);
+                Yii::$app->session->setFlash("secret_pass_error", "Maxfiy parolni noto'g'ri kiritdingiz!");
+                $model->password = '';
+                $model->secret = '';
+                return $this->render("register", ['model' => $model]);
             }
-            if ($model->signup()) {
+            if ($model->register()) {
                 $login = new LoginForm();
                 $login->login = $model->login;
                 $login->password = $model->password;
                 if ($login->login()) {
                     return $this->redirect(['main/index']);
                 }
+                Yii::$app->session->setFlash("login-error-in-reg-action", "Ro'yxatdan o'tish muvofaqayatli amalga oshirildi. Faqat tizimga kirishda muammo yuzaga keldi! Login va parolni kiritib tizimga kiring");
+                return $this->redirect(['main/login']);
             }
         }
 
@@ -74,13 +88,5 @@ class MainController extends Controller
         Yii::$app->user->logout();
 
         return $this->goHome();
-    }
-
-    public function actionError() {
-        $this->layout = 'error';
-        $error = Yii::$app->response->statusCode;
-        if ($error === 404) {
-            return $this->render('error404');
-        }
     }
 }
