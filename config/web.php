@@ -59,6 +59,11 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                'select-uploaded-test' => 'teacher/select-uploaded-test',
+                'select-students-result' => 'teacher/select-students-result',
+                '<test_name:[^/]+>/<test_id:\d+>/students-result' => 'teacher/students-result',
+                'uploaded-test/<id:\d+>' => 'teacher/uploaded-test',
+                'student-detail-result/<id:\d+>' => 'teacher/student-detail-result'
             ],
         ],
     ],

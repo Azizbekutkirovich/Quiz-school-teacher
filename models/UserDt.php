@@ -31,8 +31,8 @@ class UserDt extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'question_id', 'correct', 'wrong', 'selected'], 'required'],
-            [['user_id', 'question_id'], 'integer'],
+            [['user_id', 'test_id', 'correct', 'wrong', 'selected'], 'required'],
+            [['user_id', 'test_id'], 'integer'],
             [['date'], 'safe'],
             [['correct', 'wrong', 'selected'], 'string', 'max' => 255],
         ];
@@ -46,7 +46,7 @@ class UserDt extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'user_id' => 'User ID',
-            'question_id' => 'Question ID',
+            'test_id' => 'Test ID',
             'correct' => 'Correct',
             'wrong' => 'Wrong',
             'selected' => 'Selected',

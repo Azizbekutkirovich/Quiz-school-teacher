@@ -63,7 +63,7 @@ class MainController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             if ($model->secret != "platforma_va_test") {
-                Yii::$app->session->setFlash("secret_pass_error", "Maxfiy parolni noto'g'ri kiritdingiz!");
+                Yii::$app->session->setFlash("secret-pass-error", "Maxfiy parolni noto'g'ri kiritdingiz!");
                 $model->password = '';
                 $model->secret = '';
                 return $this->render("register", ['model' => $model]);

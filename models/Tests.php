@@ -8,11 +8,14 @@ use Yii;
  * This is the model class for table "tests".
  *
  * @property int $id
- * @property int $test_id
- * @property int $school
- * @property string $job
- * @property int $class
  * @property int $teach_id
+ * @property int $school
+ * @property int $class
+ * @property string $job
+ * @property string $name
+ * @property string $test_name
+ * @property string $date
+ * @property int $time
  */
 class Tests extends \yii\db\ActiveRecord
 {
@@ -30,9 +33,10 @@ class Tests extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['test_id', 'school', 'job', 'class', 'teach_id'], 'required'],
-            [['test_id', 'school', 'class', 'teach_id'], 'integer'],
-            [['job'], 'string', 'max' => 255],
+            [['teach_id', 'school', 'class', 'job', 'name', 'test_name', 'time'], 'required'],
+            [['teach_id', 'school', 'class', 'time'], 'integer'],
+            [['date'], 'safe'],
+            [['job', 'name', 'test_name'], 'string', 'max' => 255],
         ];
     }
 
@@ -43,11 +47,14 @@ class Tests extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'test_id' => 'Test ID',
-            'school' => 'School',
-            'job' => 'Job',
-            'class' => 'Class',
             'teach_id' => 'Teach ID',
+            'school' => 'School',
+            'class' => 'Class',
+            'job' => 'Job',
+            'name' => 'Name',
+            'test_name' => 'Test Name',
+            'date' => 'Date',
+            'time' => 'Time',
         ];
     }
 }

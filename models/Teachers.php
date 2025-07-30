@@ -47,7 +47,7 @@ class Teachers extends \yii\db\ActiveRecord implements IdentityInterface
 
     public static function findIdentity($id)
     {
-        return self::findone(['id' => $id]);
+        return self::find()->select(['id', 'name', 'surname', 'school', 'job'])->where(['id' => $id])->one();
     }
 
     /**

@@ -1,10 +1,10 @@
 <?php
 	use yii\helpers\Url;
-	use app\models\Users;
+	$this->title = "$test_name bo'yicha natijalar";
 ?>
 <div class="container">
 	<h3 style="text-align: center;"><?=$test_name?> bo'yicha o'quvchilar natijalari</h3>
-	<?php if (!empty($users_info)): ?>
+	<?php if (!empty($students_result)): ?>
 	<div class="row">
 		<table>
 			<thead>
@@ -16,25 +16,21 @@
 			    <th>Qo'shimcha</th>
 				</tr>
 			</thead>
-	<?php for ($i = count($users_info) - 1; $i >= 0; $i--): ?>
-		<?php
-			$users = Users::findOne(['id' => $users_info[$i]['user_id']]);
-		?>
+	<?php for ($i = count($students_result) - 1; $i >= 0; $i--): ?>
+			<?php
+				$student_name = $students_info[$students_result[$i]['user_id']]['name'];
+				$student_surname = $students_info[$students_result[$i]['user_id']]['surname'];
+				$student_class = $students_info[$students_result[$i]['user_id']]['class'];
+				$correct = $students_result[$i]['correct'];
+				$wrong = $students_result[$i]['wrong'];
+			?>
 			<tbody>
 		    <tr>
-		      <td><?=$users->surname?> <?=$users->name?></td>
-		      <td class="cl"><?=$users->class?></td>
-		      <?php if ($users_info[$i]['correct'] != '0'): ?>
-		      <td><?=$users_info[$i]['correct']?></td>
-		      <?php else: ?>
-		      	<td>To'g'rilar yo'q</td>
-		      <?php endif; ?>
-		      <?php if ($users_info[$i]['wrong'] != '0'): ?>
-		      <td><?=$users_info[$i]['wrong']?></td>
-		      <?php else: ?>
-		      	<td>Xatolar yo'q</td>
-		      <?php endif; ?>
-		      <td><a class="btn btn-info" href="<?=Url::to(['teacher/detail', 'id' => $users_info[$i]['id']])?>">Batafsil</a></td>
+		      <td><?=$student_surname?> <?=$student_name?></td>
+		      <td class="cl"><?=$student_class?></td>
+		      <td><?=$correct?></td>
+		      <td><?=$wrong?></td>
+		      <td><a class="btn btn-info" href="<?=Url::to(['teacher/student-detail-result', 'id' => $students_result[$i]['id']])?>">Batafsil</a></td>
 		    </tr>
 			</tbody>
 	<?php endfor; ?>

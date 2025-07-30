@@ -2,6 +2,7 @@
   use yii\helpers\Url;
   use yii\helpers\Html;
   use yii\bootstrap5\ActiveForm;
+  $this->title = "Login";
 ?>
 <div class="form_wrapper">
     <div class="form_container" id="title">

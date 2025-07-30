@@ -5,10 +5,8 @@ namespace app\controllers;
 use Yii;
 use yii\web\Controller;
 use app\models\File;
-use app\models\Tests;
-use app\models\Test;
 use app\models\Teachers;
-use app\models\Questions;
+use app\models\Tests;
 use yii\web\UploadedFile;
 use app\excel\SimpleXLSX;
 
@@ -56,18 +54,18 @@ class TestController extends Controller
 					]);
 				}
 			}
-			$teacher_info = Teachers::findOne(['id' => Yii::$app->user->identity->id]);
-			$questions = new Questions();
-			$questions->school = $teacher_info->school;
-			$questions->job = $teacher_info->job;
-			$questions->class = $model->class;
-			$questions->teach_id = Yii::$app->user->identity->id;
-			$questions->test_name = $model->test_name;
-			$questions->time = $model->time;
+			$teacher_info = Teachers::findOne(['id' => Yii::$app->user->id]);
+			$tests = new Tests();
+			$tests->school = $teacher_info->school;
+			$tests->job = $teacher_info->job;
+			$tests->class = $model->class;
+			$tests->teach_id = Yii::$app->user->id;
+			$tests->test_name = $model->test_name;
+			$tests->time = $model->time;
 			$file = UploadedFile::getInstance($model, 'file');
 			$name = "test".time();
-			$questions->name = $name.'.'.$file->extension;
-			if ($questions->save() && $file->saveAs('./../../quiz-school/web/tests/'.$name.'.'.$file->extension)) {
+			$tests->name = $name.'.'.$file->extension;
+			if ($tests->save() && $file->saveAs('./../../quiz-school/web/tests/'.$name.'.'.$file->extension)) {
 				return $this->render("success");
 			}
 			// $excel = SimpleXLSX::parse($_FILES['File']['tmp_name']['file']);

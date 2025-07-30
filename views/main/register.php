@@ -8,8 +8,8 @@
 <div class="form_wrapper">
     <div class="form_container" id="title">
       <div class="title_container">
-        <?php if (Yii::$app->session->hasFlash('secret_pass_error')): ?>
-          <h1 class="alert alert-danger"><?=Yii::$app->session->getFlash('secret_pass_error')?></h1>
+        <?php if (Yii::$app->session->hasFlash('secret-pass-error')): ?>
+          <h1 class="alert alert-danger"><?=Yii::$app->session->getFlash('secret-pass-error')?></h1>
         <?php endif; ?>
         <h2><span style="color: red;">Quiz teacher</span> platformasiga ro'yxatdan o'tish</h2>
       </div>
