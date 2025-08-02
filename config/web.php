@@ -27,6 +27,13 @@ $config = [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
+        'minio' => [
+            'class' => 'app\components\MinioComponent',
+            'accessKey' => 'minioadmin',
+            'secretKey' => 'minioadmin123',
+            'endpoint' => 'http://localhost:9000',
+            'bucket' => 'test-files'
+        ],
         'user' => [
             'identityClass' => 'app\models\Teachers',
             'enableAutoLogin' => true,
@@ -59,11 +66,13 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                'home' => 'main/index',
                 'select-uploaded-test' => 'teacher/select-uploaded-test',
                 'select-students-result' => 'teacher/select-students-result',
                 '<test_name:[^/]+>/<test_id:\d+>/students-result' => 'teacher/students-result',
                 'uploaded-test/<id:\d+>' => 'teacher/uploaded-test',
-                'student-detail-result/<id:\d+>' => 'teacher/student-detail-result'
+                'student-detail-result/<id:\d+>' => 'teacher/student-detail-result',
+                'upload' => 'test/upload'
             ],
         ],
     ],

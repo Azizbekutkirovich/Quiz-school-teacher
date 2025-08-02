@@ -7,7 +7,8 @@ use yii\filters\AccessControl;
 use app\models\Tests;
 use app\models\UserDt;
 use app\models\Users;
-use app\excel\SimpleXLSX;
+use app\excel\TestParser;
+use app\excel\StartOfFile;
 
 class TeacherController extends Controller
 {
@@ -40,8 +41,10 @@ class TeacherController extends Controller
 		if (empty($info) || $info->teach_id !== Yii::$app->user->id) {
 			return $this->goBack();
 		}
-		$rows = $this->parsing($info->name);
-		$start = $this->getStartOfTheTest($rows);
+		$s3_file_key = Yii::$app->user->identity->login.'/'.$info->name;
+		$file = Yii::$app->minio->getFile($s3_file_key);
+		$rows = TestParser::getParsedData($file);
+		$start = StartOfFile::getStartOfTheTest($rows);
 		return $this->render("uploaded-test", [
 			'start' => $start,
 			'rows' => $rows,
@@ -93,31 +96,15 @@ class TeacherController extends Controller
 		if (empty($test) || $test->teach_id !== Yii::$app->user->id) {
 			return $this->goBack();
 		}
-		$rows = $this->parsing($test->name);
-		$start = $this->getStartOfTheTest($rows);
+		$s3_file_key = Yii::$app->user->identity->login.'/'.$test->name;
+		$file = Yii::$app->minio->getFile($s3_file_key);
+		$rows = TestParser::getParsedData($file);
+		$start = StartOfFile::getStartOfTheTest($rows);
 		return $this->render("student-detail-result", [
 			'info' => $info,
 			'test_name' => $test->test_name,
 			'rows' => $rows,
 			'start' => $start
 		]);
-	}
-
-	private function getStartOfTheTest($rows) {
-		$start = '';
-		for ($i = 0; $i < count($rows); $i++) {
-			if ($rows[$i][0] == 'T/r' || $rows[$i][0] == '№') {
-				$start = $i + 1;
-			} else if ($rows[$i][1] == 'Savollar' || $rows[$i][1] == 'Savol') {
-				$start = $i + 1;
-			}
-		}
-		return $start ?? false;
-	}
-
-	private function parsing($name) {
-		$src = "./../../quiz-school/web/tests/".$name;
-		$rows = SimpleXLSX::parse($src)->rows();
-		return $rows;
 	}
 }

@@ -12,7 +12,8 @@ class File extends Model
 
 	public function rules() {
 		return [
-			[['file', 'test_name', 'class', 'time'], 'required', 'message' => "Maydonni to'ldirish shart!"]
+			[['file', 'test_name', 'class', 'time'], 'required', 'message' => "Maydonni to'ldirish shart!"],
+			['file', 'safe']
 		];
 	}
 

@@ -2,9 +2,15 @@
 	use yii\helpers\Url;
 	use yii\helpers\Html;
 	use yii\bootstrap5\ActiveForm;
+	$this->title = "Test yuklash";
 ?>
 <div class="container">
 	<div class="row" style="margin-top: 100px;">
+		<?php if (Yii::$app->session->hasFlash('validate-test-error')): ?>
+		<div class="alert alert-danger">
+			<?= Yii::$app->session->getFlash('validate-test-error') ?>
+		</div>
+		<?php endif; ?>
 		<?php $f = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 			<?= $f->field($model, 'test_name')->textInput(['placeholder' => "Test nomini kiriting"])->label(false); ?>
 		   <div class="col_half">
@@ -28,7 +34,7 @@
           </div>
 			<label>Testni yuklang</label>
 			<?= $f->field($model, 'file')->fileInput()->label(false);?>
-			<?= $f->field($model, 'time')->input('number',  ['min' => 1, 'step' => 1, 'placeholder' => 'Minut']) ?>
+			<?= $f->field($model, 'time')->input('number',  ['min' => 1, 'step' => 1, 'placeholder' => 'Minut']); ?>
 			<?php
 				echo Html::submitButton("Yuborish", ['class' => 'btn btn-info']);
 		?>
