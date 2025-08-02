@@ -41,9 +41,9 @@ class TeacherController extends Controller
 		if (empty($info) || $info->teach_id !== Yii::$app->user->id) {
 			return $this->goBack();
 		}
-		$s3_file_key = Yii::$app->user->identity->login.'/'.$info->name;
+		$s3_file_key = Yii::$app->user->id.'/'.$info->name;
 		$file = Yii::$app->minio->getFile($s3_file_key);
-		$rows = TestParser::getParsedData($file);
+		$rows = TestParser::getParsedData($file, true);
 		$start = StartOfFile::getStartOfTheTest($rows);
 		return $this->render("uploaded-test", [
 			'start' => $start,
@@ -96,9 +96,9 @@ class TeacherController extends Controller
 		if (empty($test) || $test->teach_id !== Yii::$app->user->id) {
 			return $this->goBack();
 		}
-		$s3_file_key = Yii::$app->user->identity->login.'/'.$test->name;
+		$s3_file_key = Yii::$app->user->id.'/'.$test->name;
 		$file = Yii::$app->minio->getFile($s3_file_key);
-		$rows = TestParser::getParsedData($file);
+		$rows = TestParser::getParsedData($file, true);
 		$start = StartOfFile::getStartOfTheTest($rows);
 		return $this->render("student-detail-result", [
 			'info' => $info,

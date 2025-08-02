@@ -33,7 +33,7 @@ class TestController extends Controller
 	public function actionUpload() {
 		$model = new File();
 		if ($model->load(Yii::$app->request->post())) {
-			$rows = TestParser::getParsedData($_FILES['File']['tmp_name']['file']);
+			$rows = TestParser::getParsedData($_FILES['File']['tmp_name']['file'], false);
 			$start = StartOfFile::getStartOfTheTest($rows);
 			$validate = new ValidateTestFile($start, $rows);
 			if (!$validate->validate()) {
@@ -63,7 +63,7 @@ class TestController extends Controller
 		$name = "test".time();
 		$filename = $name.'.'.UploadedFile::getInstance($model, 'file')->extension;
 		$tests->name = $filename;
-		$s3_file_key = Yii::$app->user->identity->login."/".$filename;
+		$s3_file_key = Yii::$app->user->id."/".$filename;
 		if (Yii::$app->minio->upload($s3_file_key, fopen($file, 'rb')) && $tests->save()) {
 			return [
 				'status' => true,
