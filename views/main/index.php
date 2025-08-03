@@ -28,11 +28,11 @@
           <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-table" viewBox="0 0 16 16">
 <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm15 2h-4v3h4V4zm0 4h-4v3h4V8zm0 4h-4v3h3a1 1 0 0 0 1-1v-2zm-5 3v-3H6v3h4zm-5 0v-3H1v2a1 1 0 0 0 1 1h3zm-4-4h4V8H1v3zm0-4h4V4H1v3zm5-3v3h4V4H6zm4 4H6v3h4V8z"/>
 </svg>
-          <p style="font-size: 20px;">O'QUVCHILAR BAJARGAN TESTLAR</p>
+          <p style="font-size: 20px;">O'QUVCHILAR NATIJALARI</p>
         </a>
       </div><br>
       <div class="four col-md-6" id="cash" type="submit" style="margin-top: 30px;">
-        <a class="counter-box" href="<?=Url::to(['test/howupload'])?>" style="background-color: #E8E8E8; border-radius: 20px;">
+        <a class="counter-box" href="<?=Url::to(['test/how-upload'])?>" style="background-color: #E8E8E8; border-radius: 20px;">
           <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-file-earmark-ruled" viewBox="0 0 16 16">
   <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V9H3V2a1 1 0 0 1 1-1h5.5v2zM3 12v-2h2v2H3zm0 1h2v2H4a1 1 0 0 1-1-1v-1zm3 2v-2h7v1a1 1 0 0 1-1 1H6zm7-3H6v-2h7v2z"/>
 </svg>

@@ -72,7 +72,8 @@ $config = [
                 '<test_name:[^/]+>/<test_id:\d+>/students-result' => 'teacher/students-result',
                 'uploaded-test/<id:\d+>' => 'teacher/uploaded-test',
                 'student-detail-result/<id:\d+>' => 'teacher/student-detail-result',
-                'upload' => 'test/upload'
+                'upload' => 'test/upload',
+                'how-upload' => 'test/how-upload'
             ],
         ],
     ],

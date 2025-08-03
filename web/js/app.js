@@ -3,14 +3,14 @@ $(window).on('load', function () {
     $("#preloder").delay(200).fadeOut("slow");
 });
 
-if (document.URL == "http://localhost:8080/quiz-school-demo-teacher/") {
+if (document.URL == "http://localhost/quiz-school-teacher/") {
 	$('#home').addClass('active');
-} else if (document.URL == "http://localhost:8080/quiz-school-demo-teacher/main/index") {
+} else if (document.URL == "http://localhost/quiz-school-teacher/home") {
 	$('#home').addClass('active');
-} else if (document.URL == "http://localhost:8080/quiz-school-demo-teacher/test/upload") {
+} else if (document.URL == "http://localhost/quiz-school-teacher/upload") {
 	$('#upload').addClass('active');
-} else if (document.URL == 'http://localhost:8080/quiz-school-demo-teacher/teacher/select') {
+} else if (document.URL == 'http://localhost/quiz-school-teacher/select-uploaded-test') {
 	$('#info').addClass('active');
-} else if (document.URL == 'http://localhost:8080/quiz-school-demo-teacher/teacher/selectview') {
+} else if (document.URL == 'http://localhost/quiz-school-teacher/select-students-result') {
 	$('#view').addClass('active');
 }

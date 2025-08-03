@@ -30,7 +30,7 @@ class TeacherController extends Controller
 	public function actionSelectUploadedTest() {
 		$tests = Tests::find()
 			->asArray()
-			->select(['id', 'test_name', 'date'])
+			->select(['id', 'test_name', 'class', 'date'])
 			->where(['teach_id' => Yii::$app->user->id])
 			->all();
 		return $this->render("select-uploaded-test", ['tests' => $tests]);
@@ -64,7 +64,7 @@ class TeacherController extends Controller
 	public function actionStudentsResult(int $test_id, string $test_name) {
 		$students_result = UserDt::find()
 			->asArray()
-			->select(['id', 'user_id', 'correct', 'wrong'])
+			->select(['id', 'user_id', 'correct', 'wrong', 'date'])
 			->where(['test_id' => $test_id])
 			->all();
 		$student_ids = array_column($students_result, 'user_id');

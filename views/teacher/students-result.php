@@ -1,18 +1,26 @@
 <?php
 	use yii\helpers\Url;
 	$this->title = "$test_name bo'yicha natijalar";
+	$this->registerCssFile('./../../css/table.css');
 ?>
+<style type="text/css">
+	table thead {
+	  color: white;
+	  background: #4723D9;
+	}
+</style>
 <div class="container">
+<?php if (!empty($students_result)): ?>
 	<h3 style="text-align: center;"><?=$test_name?> bo'yicha o'quvchilar natijalari</h3>
-	<?php if (!empty($students_result)): ?>
 	<div class="row">
 		<table>
 			<thead>
 				<tr>
+					<th>Yechilgan vaqt</th>
 			    <th>Ism va Familya</th>
 			    <th>Sinf</th>
-			    <th>To'g'rilari</th>
-			    <th>Noto'g'rilari</th>
+			    <th>To'g'ri javoblar</th>
+			    <th>Noto'g'ri javoblar</th>
 			    <th>Qo'shimcha</th>
 				</tr>
 			</thead>
@@ -21,15 +29,20 @@
 				$student_name = $students_info[$students_result[$i]['user_id']]['name'];
 				$student_surname = $students_info[$students_result[$i]['user_id']]['surname'];
 				$student_class = $students_info[$students_result[$i]['user_id']]['class'];
-				$correct = $students_result[$i]['correct'];
-				$wrong = $students_result[$i]['wrong'];
+				$correct = $students_result[$i]['correct'] === 'Barchasi xato!,' ? '' : $students_result[$i]['correct'];
+				$wrong = $students_result[$i]['wrong'] === "Barchasi to'g'ri!," ? '' : $students_result[$i]['wrong'];
+				$correct_count = count(explode(',', $correct)) - 1;
+				$wrong_count = count(explode(',', $wrong)) - 1;
+				$date = date('d.m.Y', strtotime($students_result[$i]['date']));
+				$time = date('H:i', strtotime($students_result[$i]['date']));
 			?>
 			<tbody>
 		    <tr>
+		    	<td><?=$date?><br><?=$time?></td>
 		      <td><?=$student_surname?> <?=$student_name?></td>
 		      <td class="cl"><?=$student_class?></td>
-		      <td><?=$correct?></td>
-		      <td><?=$wrong?></td>
+		      <td><?=$correct_count?>ta</td>
+		      <td><?=$wrong_count?>ta</td>
 		      <td><a class="btn btn-info" href="<?=Url::to(['teacher/student-detail-result', 'id' => $students_result[$i]['id']])?>">Batafsil</a></td>
 		    </tr>
 			</tbody>
@@ -37,38 +50,6 @@
 		</table>
 	</div>
 <?php else: ?>
-	<h3>Bu testingizni hali hech kim ishlamagan!</h3>
+	<h3 style="margin-top: 9em; text-align: center;">Bu testingizni hali hech kim ishlamagan!</h3>
 <?php endif; ?>
-<style type="text/css">
-  table {
-  width: 100%;
-  border-top: 1px solid #ccc;
-  border-left: 1px solid #ccc;
-  border-collapse: collapse;
-  margin-bottom: 1em;
-}
-table th, table td {
-  padding: 0.5em 1em;
-  border-bottom: 1px solid #ccc;
-  border-right: 1px solid #ccc;
-  white-space: pre;
-}
-table thead th, table tbody td {
-  text-align: center;
-}
-table thead {
-  color: white;
-  background: #0cf;
-}
-table thead th {
-  padding: 1em;
-}
-table[data-comparing="active"] tbody th {
-  border-bottom: none;
-  font-size: 0.75em;
-  color: #767676;
-  padding-bottom: 0;
-}
-
-</style>
 </div>
