@@ -55,6 +55,15 @@ The following diagram illustrates the overall architecture of the project:
 
 ---
 
+### 🔧 Technical Details
+
+- **MinIO** is used as an S3-compatible object storage to handle uploaded Excel files.
+  - Integrated as a custom Yii2 component.
+  - The component implementation can be found in [`components/MinioComponent.php`](https://github.com/Azizbekutkirovich/Quiz-school-teacher/blob/main/components/MinioComponent.php).
+  - Uploaded Excel files are directly stored in MinIO instead of the local file system to optimize storage space and support scalability.
+
+---
+
 ## 🚀 How to Run Locally
 
 Run the following commands in your terminal:
