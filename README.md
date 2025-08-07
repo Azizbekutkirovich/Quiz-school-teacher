@@ -45,6 +45,16 @@ Quiz-School provides a fully digital two-module solution:
 
 ---
 
+---
+
+## 🖼️ Architecture Diagram (Screenshot)
+
+The following diagram illustrates the overall architecture of the project:
+
+![Architecture Diagram](web/images/architecture.png)
+
+---
+
 ## 🚀 How to Run Locally
 
 Run the following commands in your terminal:
