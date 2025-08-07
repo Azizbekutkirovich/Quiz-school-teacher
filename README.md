@@ -33,11 +33,15 @@ Quiz-School provides a fully digital two-module solution:
 
 ## ⚙️ Tech Stack
 
-- PHP (Yii2 Basic)
+- HTML
+- CSS (Bootstrap 5)
+- Javascript
+- PHP 8.2
+- Yii2-basic 2.0.51
 - MySQL
-- PHPExcel / PhpSpreadsheet
-- Bootstrap
-- jQuery / AJAX
+- Redis
+- MinIO
+- Docker
 
 ---
 
